@@ -3,7 +3,7 @@
     --border-color: lightgray;
 }
 body {
-    background-image: url(../ships/photo/image\ 2.png);
+    background-image: url('../photo/background.png');
 }
 
 div#startpage {
