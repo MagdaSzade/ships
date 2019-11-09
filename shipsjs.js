@@ -1,3 +1,17 @@
+window.addEventListener('load', (event) => {
+    var gameBoard = document.getElementById("board");
+    gameBoard.style.display = "none";
+  });
+
+var onePlayer = document.getElementById("onePlayer");
+
+onePlayer.addEventListener('click', () => {
+    var start = document.getElementById("startpage");
+    startpage.style.display = "none";
+    var gameBoard = document.getElementById("board");
+    gameBoard.style.display = "grid";
+})
+
 class Field {
     constructor(type) {
         this.type = type;
