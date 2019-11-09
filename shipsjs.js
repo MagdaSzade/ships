@@ -113,9 +113,9 @@ function showAllBoard(board) {
             let firedField = shotField(i, j);
             if (gameBoard[i][j].type === 'ship') {
                 gameBoard[i][j].isHited = true;
-                document.querySelector(firedField).setAttribute("src", "ships/ship.jpg");    
+                document.querySelector(firedField).setAttribute("src", "ships/ship.png");    
             } else if (gameBoard[i][j].type === 'mishit') {
-                document.querySelector(firedField).setAttribute("src", "ships/pudlo.jpg");
+                document.querySelector(firedField).setAttribute("src", "ships/pudlo.png");
                 gameBoard[i][j].isHited = true;
             } 
         }
@@ -206,11 +206,11 @@ function CollectInput() {
             } else {
                 let firedField = shotField(value.row, value.col);
                 if (gameBoard[value.row][value.col].type === 'ship') {
-                    document.querySelector(firedField).setAttribute("src", "ships/ship.jpg");
+                    document.querySelector(firedField).setAttribute("src", "ships/ship.png");
                     counter--;
                     isEndOfGame();    
                 } else {
-                    document.querySelector(firedField).setAttribute("src", "ships/pudlo.jpg");
+                    document.querySelector(firedField).setAttribute("src", "ships/pudlo.png");
                 } 
                 gameBoard[value.row][value.col].isHited = true;
             }
