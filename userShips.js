@@ -1,3 +1,26 @@
+// rotate ship
+const rotate = document.querySelector('.rotate');
+const ships = document.querySelectorAll('.ship');
+rotate.addEventListener('click', rotateShips);
+
+function rotateShips() {
+    ships.forEach(function(el) {
+        let direction = el.getAttribute('data-direction');
+        if(direction == 0) {
+            el.style.height = el.clientWidth + 'px';
+            el.style.width = '50px';
+            el.setAttribute('data-direction', 1);
+        }
+        if(direction == 1) {
+            el.setAttribute('data-direction', 0);
+            el.style.width = el.clientHeight + 'px';
+            el.style.height = '50px';
+        }
+  });
+}
+
+
+
 class Field {
   constructor(type) {
       this.type = type;
