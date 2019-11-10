@@ -26,6 +26,11 @@ function checkIfSuitsRows(init, board, masts) {
 function checkIfSuitsCols(init, board, masts) {
   if (init.col >= 1) { if (typeof board[init.row][init.col-1] !== 'undefined' && typeof board[init.row][init.col-1] === 'ship') { return false; }; }
   if (init.col + masts <= 9) { if (typeof board[init.row][init.col+masts] !== 'undefined' && typeof board[init.row][init.col+masts] === 'ship') { return false; }; }
+
+  if (init.col + masts > 10) {  /* Only for draggable ships */
+      return false;
+  }
+
   for (let i = init.col; i < init.col + masts; i++) {
       if ( typeof board[init.row][i] !== 'undefined') {
           return false;
@@ -106,19 +111,21 @@ var dragged;
   /* events fired on the drop targets */
   document.addEventListener("dragover", function( event ) {
       // prevent default to allow drop
-      event.preventDefault();
+      let masts = Number(dragged.dataset.masts);  /* Test */
+      let init = validateInput(event.target.id);
+      if(checkIfSuitsCols(init, userBoard, masts) === false){
+        event.target.style.backgroundColor = 'red';
+      } else {
+        event.preventDefault();
+      }
+
   }, false);
 
   document.addEventListener("dragenter", function( event ) {
       // highlight potential drop target when the draggable element enters it
-      let masts = 1;  /* Test */
-      let init = validateInput(event.target.id);
-      if(checkIfSuitsCols(init, userBoard, masts) === false){
-        event.target.style.backgroundColor = 'red';
-      } else if ( event.target.className == "board-field" ) {
+
+      if ( event.target.className == "board-field" ) {
           event.target.style.background = "green";
-
-
       }
   }, false);
 
@@ -133,16 +140,16 @@ var dragged;
       event.preventDefault();
 
       // move dragged elem to the selected drop target
-      let masts = 1; /* Test */
+      let masts = Number(dragged.dataset.masts);
       let init = validateInput(event.target.id);
+      let direction = Number(dragged.dataset.direction);
+
       if ( event.target.className == "board-field" ) {
           event.target.style.background = "";
-          dragged.classList.add('absolute');
           dragged.parentNode.removeChild( dragged );
           event.target.appendChild( dragged );
-          userSetShip(masts, userBoard, init, 0); /* Test */
-          dragged.setAttribute.dragged = 'false';
-
+          userSetShip(masts, userBoard, init, direction); /* Test */
+          dragged.setAttribute('draggable', 'false');
           console.log(validateInput(event.target.id));
           console.log(userBoard);
       }
