@@ -1,18 +1,20 @@
 // rotate ship
 const rotate = document.querySelector('.rotate');
-const ships = document.querySelectorAll('.ship');
+const ships = document.querySelectorAll('.ships .ship');
 rotate.addEventListener('click', rotateShips);
 
 function rotateShips() {
     ships.forEach(function(el) {
         let direction = el.getAttribute('data-direction');
-        if(direction == 0) {
+        let draggable = el.getAttribute('draggable');
+        if(direction == 1 && draggable === 'true') {
             el.style.height = el.clientWidth + 'px';
             el.style.width = '50px';
-            el.setAttribute('data-direction', 1);
-        }
-        if(direction == 1) {
             el.setAttribute('data-direction', 0);
+
+        }
+        if(direction == 0 && draggable === 'true') {
+            el.setAttribute('data-direction', 1);
             el.style.width = el.clientHeight + 'px';
             el.style.height = '50px';
         }
@@ -38,6 +40,9 @@ const createEmptyBoard = () => {
 function checkIfSuitsRows(init, board, masts) {
   if (init.row >= 1) { if (typeof board[init.row-1][init.col] !== 'undefined' && typeof board[init.row-1][init.col] === 'ship') { return false; }; }
   if (init.row + masts <= 9) { if (typeof board[init.row+masts][init.col] !== 'undefined' && typeof board[init.row+masts][init.col] === 'ship') { return false; }; }
+  if (init.row + masts > 10) {  /* Only for draggable ships */
+    return false;
+}
   for (let i = init.row; i < init.row + masts; i++) {
       if ( typeof board[i][init.col] !== 'undefined') {
           return false;
@@ -136,11 +141,22 @@ var dragged;
       // prevent default to allow drop
       let masts = Number(dragged.dataset.masts);  /* Test */
       let init = validateInput(event.target.id);
-      if(checkIfSuitsCols(init, userBoard, masts) === false){
-        event.target.style.backgroundColor = 'red';
-      } else {
-        event.preventDefault();
+      let direction = Number(dragged.dataset.direction);
+      if(direction == 1) {
+        if(checkIfSuitsCols(init, userBoard, masts) === false){
+            event.target.style.backgroundColor = 'red';
+          } else {
+            event.preventDefault();
+          }
       }
+      if(direction == 0) {
+        if(checkIfSuitsRows(init, userBoard, masts) === false){
+            event.target.style.backgroundColor = 'red';
+          } else {
+            event.preventDefault();
+          }
+      }
+
 
   }, false);
 
@@ -187,16 +203,25 @@ var dragged;
         rowEnd: 10,
         colStart: 0,
         colEnd: 10,
-    }
-
+    };
+    if (direction === 0) {
         range.rowEnd = range.rowEnd - masts + 1;
 
-            if (init.col >= 1) { board[init.row][init.col-1] = new Field('mishit'); }
+        if (init.row >= 1) { board[init.row-1][init.col] = new Field('mishit'); }
+        if (init.row + masts <= 9) { board[init.row+masts][init.col] = new Field('mishit'); }
+        for (let i = init.row; i < init.row + masts; i++) {
+            board[i][init.col] = new Field('ship');
+            if (init.col-1 >= 0) { board[i][init.col-1] = new Field('mishit') };
+            if (init.col+1 <= 9) { board[i][init.col+1] = new Field('mishit') };
+        }
+    } else if (direction === 1) {
+        range.colEnd = range.colEnd - masts + 1;
+        if (init.col >= 1) { board[init.row][init.col-1] = new Field('mishit'); }
             if (init.col + masts <= 9) { board[init.row][init.col+masts] = new Field('mishit'); }
             for (let i = init.col; i < init.col + masts; i++) {
                 board[init.row][i] = new Field('ship');
                 if (init.row-1 >= 0) { board[init.row-1][i] = new Field('mishit') };
                 if (init.row+1 <= 9) { board[init.row+1][i] = new Field('mishit') };
             }
-
+    }
     }
