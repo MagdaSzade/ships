@@ -75,7 +75,6 @@ class AIGame {
             if (this.gameBoard.board[coordinate.row][coordinate.col].type === 'ship') {
                 aoBoardHTML.querySelector(firedField).setAttribute("src", "./img/ships/ship.png");
                 this.aoHitCounter++;
-                console.log(this.aoHitCounter);
                 this.isEndOfGame();
 
 
@@ -95,7 +94,6 @@ class AIGame {
                 gameBoardHTML.querySelector(firedField).setAttribute("src", "./img/ships/ship.png");
                 gameBoardHTML.querySelector(firedField).classList.add('absolute');
                 this.playerHitCounter++;
-                console.log(this.playerHitCounter);
                 this.isEndOfGame();
                 this.aoMove();
             } else {
@@ -193,16 +191,12 @@ document.addEventListener("drop", function (event) {
         allMasts = allMasts - masts;
         if (allMasts === 0) {
             manualBoard.fillEmptyFields();
-            console.log(manualBoard);
             shipsContainer.style.display = "none";
             aoBoardHTML.style.display = "grid";
+            gameBoardHTML.style.margin = 'auto';
             game = new AIGame();
             game.aiPlayerGame();
         }
-
-        console.log(allMasts);
-        console.log(validateInput(event.target.id));
-
     }
 
 }, false);
