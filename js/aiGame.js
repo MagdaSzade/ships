@@ -125,7 +125,7 @@ document.addEventListener("drag", function (event) {
 document.addEventListener("dragstart", function (event) {
     // store a ref. on the dragged elem
     dragged = event.target;
-
+    event.dataTransfer.setData('text', ''); //firefox fix
     // make it half transparent
     event.target.style.opacity = .5;
 }, false);
