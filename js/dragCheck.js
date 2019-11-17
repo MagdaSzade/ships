@@ -17,6 +17,12 @@ const colorPotential = function(init, masts, direction) {
       domBoard[init.row][init.col + i].parentElement.style.backgroundColor = 'green';
     }
   }
+  if(direction === 0) {
+
+    for (let i = 0; i < masts; i++) {
+      domBoard[init.row + i][init.col].parentElement.style.backgroundColor = 'green';
+    }
+  }
 
 };
 

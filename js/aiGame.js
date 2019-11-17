@@ -134,6 +134,7 @@ document.addEventListener("dragstart", function (event) {
 document.addEventListener("dragend", function (event) {
     // reset the transparency
     event.target.style.opacity = "";
+    clearPotential();
 }, false);
 
 /* events fired on the drop targets */
@@ -168,19 +169,13 @@ document.addEventListener("dragenter", function (event) {
     // console.log(init, masts, direction);
 
     if (event.target.className == "board-field") {
+        clearPotential();
         colorPotential(init, masts, direction);
     }
 }, false);
 
 document.addEventListener("dragleave", function (event) {
     // reset background of potential drop target when the draggable element leaves it
-    console.log(event.target);
-    console.log(dragged.target);
-    if (dragged === event.target.childNodes ) {
-        clearPotential();
-    }
-
-
 
 
 }, false);
@@ -195,6 +190,7 @@ document.addEventListener("drop", function (event) {
     let direction = Number(dragged.dataset.direction);
 
     if (event.target.className == "board-field") {
+
         event.target.style.background = "";
         dragged.parentNode.removeChild(dragged);
         event.target.appendChild(dragged);
@@ -208,6 +204,7 @@ document.addEventListener("drop", function (event) {
             gameBoardHTML.style.margin = 'auto';
             game = new AIGame();
             game.aiPlayerGame();
+            console.log(manualBoard);
         }
     }
 
