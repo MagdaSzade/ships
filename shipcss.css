@@ -129,6 +129,7 @@ button {
     height: 100%;
     border: solid 1px var(--border-color);
     box-sizing: border-box;
+    margin: 1px;
 }
 
 .board-marker {

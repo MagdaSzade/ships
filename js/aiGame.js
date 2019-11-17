@@ -2,6 +2,7 @@ const Board = require('./board');
 const validateInput = require('./input');
 const shotField = require('./output');
 const AutomaticOpponent = require('./automaticOpponent');
+const {domBoard, colorPotential, clearPotential} = require('./dragCheck');
 
 // const input = document.querySelector('#move');
 const gameBoardHTML = document.getElementById("board");
@@ -161,15 +162,26 @@ document.addEventListener("dragover", function (event) {
 
 document.addEventListener("dragenter", function (event) {
     // highlight potential drop target when the draggable element enters it
+    let masts = Number(dragged.dataset.masts);
+    let init = validateInput(event.target.id);
+    let direction = Number(dragged.dataset.direction);
+    // console.log(init, masts, direction);
 
     if (event.target.className == "board-field") {
-        event.target.style.background = "green";
+        colorPotential(init, masts, direction);
     }
 }, false);
 
 document.addEventListener("dragleave", function (event) {
     // reset background of potential drop target when the draggable element leaves it
-    event.target.style.background = "";
+    console.log(event.target);
+    console.log(dragged.target);
+    if (dragged === event.target.childNodes ) {
+        clearPotential();
+    }
+
+
+
 
 }, false);
 
