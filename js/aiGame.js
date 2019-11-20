@@ -2,6 +2,7 @@ const Board = require('./board');
 const validateInput = require('./input');
 const shotField = require('./output');
 const AutomaticOpponent = require('./automaticOpponent');
+const {domBoard, colorPotential, clearPotential} = require('./dragCheck');
 
 // const input = document.querySelector('#move');
 const gameBoardHTML = document.getElementById("board");
@@ -125,7 +126,7 @@ document.addEventListener("drag", function (event) {
 document.addEventListener("dragstart", function (event) {
     // store a ref. on the dragged elem
     dragged = event.target;
-
+    event.dataTransfer.setData('text', ''); //firefox fix
     // make it half transparent
     event.target.style.opacity = .5;
 }, false);
@@ -133,6 +134,7 @@ document.addEventListener("dragstart", function (event) {
 document.addEventListener("dragend", function (event) {
     // reset the transparency
     event.target.style.opacity = "";
+    clearPotential();
 }, false);
 
 /* events fired on the drop targets */
@@ -161,15 +163,20 @@ document.addEventListener("dragover", function (event) {
 
 document.addEventListener("dragenter", function (event) {
     // highlight potential drop target when the draggable element enters it
+    let masts = Number(dragged.dataset.masts);
+    let init = validateInput(event.target.id);
+    let direction = Number(dragged.dataset.direction);
+    // console.log(init, masts, direction);
 
     if (event.target.className == "board-field") {
-        event.target.style.background = "green";
+        clearPotential();
+        colorPotential(init, masts, direction);
     }
 }, false);
 
 document.addEventListener("dragleave", function (event) {
     // reset background of potential drop target when the draggable element leaves it
-    event.target.style.background = "";
+
 
 }, false);
 
@@ -183,6 +190,7 @@ document.addEventListener("drop", function (event) {
     let direction = Number(dragged.dataset.direction);
 
     if (event.target.className == "board-field") {
+
         event.target.style.background = "";
         dragged.parentNode.removeChild(dragged);
         event.target.appendChild(dragged);
@@ -196,6 +204,7 @@ document.addEventListener("drop", function (event) {
             gameBoardHTML.style.margin = 'auto';
             game = new AIGame();
             game.aiPlayerGame();
+            console.log(manualBoard);
         }
     }
 

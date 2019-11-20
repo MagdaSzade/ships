@@ -71,7 +71,11 @@ class Board {
     }
 
     setShip(masts, init, direction) {
-        direction = direction || Math.floor(Math.random() * 2);
+        if(direction === undefined) {
+            direction = Math.floor(Math.random() * 2);
+        } else {
+            direction = direction;
+        }
 
         const range = {
             rowStart: 0,
