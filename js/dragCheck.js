@@ -1,3 +1,4 @@
+  
 const allFields = document.querySelectorAll("#board .board-field img");
 const domBoard = [];
 

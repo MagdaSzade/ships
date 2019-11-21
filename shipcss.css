@@ -5,10 +5,11 @@
 body {
     background-image: url('./img/photo/background.png');
 }
-main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+
+.base {
+    background-image: url('./img/photo/background.png');
+    margin: -10px;
+    height: 100%;
 }
 
 div#startpage {
@@ -28,6 +29,22 @@ h1 {
     font-style: normal;
     font-weight: normal;
     margin: 50px 0px;
+}
+
+h2 {
+    font-family: 'Bungee Inline';
+    font-size: 50px;
+    color: #52AD3A;
+    line-height: 0px;
+    font-style: normal;
+    font-weight: normal;
+    margin: 50px 0px;
+}
+
+#info {
+    display: block;
+    text-align: center;
+    margin: auto;
 }
 
 h3 {
@@ -52,7 +69,6 @@ h3 {
     right: 210px;
     mix-blend-mode: difference;
     transform-origin: 50% 100%;
-    animation: rotating 4s linear infinite;
     -webkit-animation: rotating 4s linear infinite;
 }
 
@@ -62,14 +78,6 @@ h3 {
     }
     to{
         -webkit-transform: rotate(360deg);
-    }
-}
-@keyframes rotating {
-    from{
-        transform: rotate(0deg);
-    }
-    to{
-        transform: rotate(360deg);
     }
 }
 
@@ -86,39 +94,68 @@ button {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.gameboard{
+    max-width: 1700px;
+    margin: auto;
+    height: 100vh;
+}
+
+#boardcontainer{
+    display: flex;
+    position: relative;
+    top: 100px;
+    max-width: 1700px;
+    margin: auto;
+}
 
 #board {
     display: grid;
-    width: 550px;
-    height: 550px;
+    width: 500px;
+    height: 500px;
     margin: auto;
-    grid-template-columns: repeat(11, 50px);;
+    grid-template-columns: repeat(10, 50px);;
     grid-template-rows: 50px;
     grid-auto-rows: 50px;
     justify-items: stretch;
     align-items: stretch;
     background-color: var(--board-color);
     border: solid 3px var(--border-color);
+    position: relative;
 }
 
 #board2 {
     display: grid;
-    width: 550px;
-    height: 550px;
+    width: 500px;
+    height: 500px;
     margin: auto;
-    grid-template-columns: repeat(11, 50px);;
+    grid-template-columns: repeat(10, 50px);;
     grid-template-rows: 50px;
     grid-auto-rows: 50px;
     justify-items: stretch;
     align-items: stretch;
     background-color: var(--board-color);
     border: solid 3px var(--border-color);
+    position: relative;
 }
 
-.content {
-    display: block;
-    margin: auto;
-    text-align: center;
+#boardOnePlayer
+{
+    position: absolute;
+    top: -49px;
+    left: -49px;
+}
+#boardTwoPlayer
+{
+    position: absolute;
+    top: -49px;
+    left: -49px;
+}
+
+#board div{
+    display: grid;
+    border: solid 1px var(--border-color);
+    width: 50px;
+    height: 50px;
 }
 
 .board-field {
@@ -129,7 +166,6 @@ button {
     height: 100%;
     border: solid 1px var(--border-color);
     box-sizing: border-box;
-    margin: 1px;
 }
 
 .board-marker {
@@ -162,7 +198,18 @@ button {
 
 #win {
     display:none;
+    font-family: Bungee;
+    font-size: 18px;
+    color: #E5E5E5;
+    line-height: 22px;
+    margin: 20px 30px;
 }
+#goBack{
+    position: relative;
+    margin: auto;
+    top: 100px;
+    display: grid;
+    }
 
 /* Ships */
 .ships {
